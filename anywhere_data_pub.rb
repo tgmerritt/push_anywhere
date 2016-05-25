@@ -14,6 +14,7 @@ class PushAnywhere
     puts "Please choose from the following options:"
     puts "1. Get a refresh token (API authorization)"
     puts "2. Make an API request"
+    puts "3. Generate Fake Data!"
     puts "Q to quit"
     get_first_choice
   end
@@ -31,10 +32,12 @@ class PushAnywhere
       run_api_menu
     elsif input == "2"
       run_api_menu
+    elsif input == "3"
+      run_fake_data
     elsif "Q".casecmp(input) == 0
       exit
     else
-      puts "Seriously?  You had three choices and you messed up?\n"
+      puts "Seriously?  You had four choices and you messed up?\n"
       sleep(5)
       puts "Intentional delay - you waste my time I waste yours.\n\n\n"
       sleep(2)
@@ -83,6 +86,10 @@ class PushAnywhere
 
   end
 
+  def run_fake_data
+
+  end
+
   def make_get_request(endpoint, record_id)
     target = record_id.blank? ? endpoint : "#{endpoint}/#{record_id}"
     data = RestClient.get "https://api-us.sapanywhere.com:443/v1/#{target}?access_token=#{@access_token}", { 'Authorization' => "Bearer #{@access_token}", 'Accept' => 'application/json' }
@@ -120,16 +127,6 @@ class PushAnywhere
     @api_secret    = 'vXNR_NXBVtXHUJsLjuMfnTMiWrwp'
     @refresh_token = '61c49b95-64df-4662-9cb0-cf078d02f69c'
   end
-
-# response = RestClient.post 'https://eap-idp-us.sapanywhere.com:443/sld/oauth2/token',:client_id=>api_key,:client_secret=>api_secret,:refresh_token=>refresh_token,:grant_type=>'refresh_token'
-
-# token = JSON.parse(response)["access_token"]
-
-# puts "The extracted token is:" + token + "\n\n\n"
-
-# data = RestClient.get "https://api-us.sapanywhere.com:443/v1/SalesOrders/633?access_token=#{@access_token}", { 'Authorization' => "Bearer #{@access_token}", 'Accept' => 'application/json' }
-
-# puts "This is the result from the query: \n" + data
 
 end
 

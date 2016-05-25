@@ -27,12 +27,11 @@
       <file leaf-file-name="anywhere_data_pub.rb" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/anywhere_data_pub.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.32188842">
-              <caret line="33" column="33" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
+            <state vertical-scroll-proportion="0.56545067">
+              <caret line="102" column="70" selection-start-line="102" selection-start-column="70" selection-end-line="102" selection-end-column="70" />
               <folding>
-                <element signature="e#2996#3226#0" expanded="false" />
-                <element signature="e#3230#3435#0" expanded="false" />
-                <element signature="e#3439#3655#0" expanded="false" />
+                <element signature="e#3334#3539#0" expanded="false" />
+                <element signature="e#3543#3759#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -165,12 +164,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/anywhere_data_pub.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.32188842">
-          <caret line="33" column="33" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.56545067">
+          <caret line="102" column="70" selection-start-line="102" selection-start-column="70" selection-end-line="102" selection-end-column="70" />
           <folding>
-            <element signature="e#2996#3226#0" expanded="false" />
-            <element signature="e#3230#3435#0" expanded="false" />
-            <element signature="e#3439#3655#0" expanded="false" />
+            <element signature="e#3334#3539#0" expanded="false" />
+            <element signature="e#3543#3759#0" expanded="false" />
           </folding>
         </state>
       </provider>
