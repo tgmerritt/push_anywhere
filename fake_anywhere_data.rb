@@ -44,23 +44,36 @@ class FakeAnywhereData
   end
 
   def ready_customer_records
-    puts "How many records would you like to create? (Enter a number between 1 and 10)"
-    qty = gets.chomp
-    check_quantity(qty)
+    execute_customer_record_create(check_quantity)
   end
 
-  def check_quantity(qty)
-    unless qty.to_i <= 10
-      puts "I said between 1 and 10..."
-      ready_customer_records
+  def ready_sales_order_records
+    execute_sales_order_create(check_quantity)
+  end
+
+  def check_quantity
+    puts "How many records would you like to create? (Enter a number between 1 and 10)"
+    qty = gets.chomp.to_i
+    unless qty <= 10
+      puts "\nI said between 1 and 10...\n"
+      check_quantity # meta!
     end
-    execute_customer_record_create(qty)
+    qty
   end
 
   def execute_customer_record_create(qty)
     qty.times do |t|
       body = FakeCustomerRecord.new.generate
       RestActions.new(endpoint: "Customers", body: body, access_token: @access_token).post_request
+    end
+  end
+
+  def execute_sales_order_create(qty)
+    r         = RestActions.new(access_token: @access_token)
+    customers = r.get_possible_customers
+    skus      = r.get_possible_skus
+    1.times do |t|
+      body = FakeSalesOrder.new(customers: customers, skus: skus, times: Random.new.rand(1..3)).generate
     end
   end
 

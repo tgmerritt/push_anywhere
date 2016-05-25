@@ -1,5 +1,6 @@
 require 'rest-client'
 require 'json'
+require_relative 'fake_sales_order'
 
 class RestActions
   attr_accessor :body, :endpoint, :record_id, :access_token
@@ -37,5 +38,15 @@ class RestActions
     puts JSON.pretty_generate(response)
     puts "\n\n\n"
     sleep(1)
+  end
+
+  def get_possible_customers
+    response = RestClient.get "https://api-us.sapanywhere.com:443/v1/Customers?access_token=#{@access_token}&select=id,customerName,customerCode", { 'Authorization' => "Bearer #{@access_token}", 'Accept' => 'application/json' }
+    (JSON.parse(response)).reject { |h| h['customerName'].nil? }
+  end
+
+  def get_possible_skus
+    response = RestClient.get "https://api-us.sapanywhere.com:443/v1/SKUs?access_token=#{@access_token}&select=id,name,code", { 'Authorization' => "Bearer #{@access_token}", 'Accept' => 'application/json' }
+    JSON.parse(response)
   end
 end
