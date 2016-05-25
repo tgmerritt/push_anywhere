@@ -73,8 +73,11 @@ class FakeAnywhereData
     customers = r.get_possible_customers
     skus      = r.get_possible_skus
     1.times do |t|
-      body = FakeSalesOrder.new(customers: customers, skus: skus, times: Random.new.rand(1..3)).generate
+      body = FakeSalesOrder.new(customers: customers, skus: skus, times: Random.new.rand(2..4)).generate
+      # puts JSON.pretty_generate(JSON.parse(body.to_json))
+      RestActions.new(endpoint: "SalesOrders", body: body, access_token: @access_token).post_request
     end
+
   end
 
   def you_screwed_up

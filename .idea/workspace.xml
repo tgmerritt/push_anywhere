@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="004acae7-84cd-4636-87ad-62846ca3d965" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/locales/en.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fake_anywhere_data.rb" afterPath="$PROJECT_DIR$/fake_anywhere_data.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fake_sales_order.rb" afterPath="$PROJECT_DIR$/fake_sales_order.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rest_actions.rb" afterPath="$PROJECT_DIR$/rest_actions.rb" />
@@ -32,7 +33,7 @@
           <file leaf-file-name="anywhere_data_pub.rb" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/anywhere_data_pub.rb">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-47.74074">
+                <state vertical-scroll-proportion="0.33333334">
                   <caret line="145" column="14" selection-start-line="145" selection-start-column="14" selection-end-line="145" selection-end-column="14" />
                   <folding>
                     <element signature="e#151#255#0" expanded="false" />
@@ -51,21 +52,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="rest_actions.rb" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/rest_actions.rb">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.03218884">
-                  <caret line="2" column="16" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="fake_anywhere_data.rb" pinned="false" current-in-tab="false">
+          <file leaf-file-name="fake_anywhere_data.rb" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/fake_anywhere_data.rb">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="71" column="60" selection-start-line="71" selection-start-column="60" selection-end-line="71" selection-end-column="60" />
+                <state vertical-scroll-proportion="0.66129035">
+                  <caret line="77" column="59" selection-start-line="77" selection-start-column="59" selection-end-line="77" selection-end-column="59" />
                   <folding />
                 </state>
               </provider>
@@ -95,11 +86,31 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="fake_sales_order.rb" pinned="false" current-in-tab="true">
+          <file leaf-file-name="fake_sales_order.rb" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/fake_sales_order.rb">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.57939917">
-                  <caret line="36" column="69" selection-start-line="36" selection-start-column="69" selection-end-line="36" selection-end-column="69" />
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="92" column="199" selection-start-line="92" selection-start-column="199" selection-end-line="92" selection-end-column="199" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="en.yml" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/lib/locales/en.yml">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.06451613">
+                  <caret line="4" column="15" selection-start-line="4" selection-start-column="15" selection-end-line="4" selection-end-column="15" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="rest_actions.rb" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/rest_actions.rb">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="32" column="12" selection-start-line="32" selection-start-column="12" selection-end-line="32" selection-end-column="12" />
                   <folding />
                 </state>
               </provider>
@@ -124,9 +135,10 @@
       <list>
         <option value="$PROJECT_DIR$/anywhere_data_pub.rb" />
         <option value="$PROJECT_DIR$/fake_customer_record.rb" />
-        <option value="$PROJECT_DIR$/fake_anywhere_data.rb" />
         <option value="$PROJECT_DIR$/rest_actions.rb" />
         <option value="$PROJECT_DIR$/fake_sales_order.rb" />
+        <option value="$PROJECT_DIR$/lib/locales/en.yml" />
+        <option value="$PROJECT_DIR$/fake_anywhere_data.rb" />
       </list>
     </option>
   </component>
@@ -187,6 +199,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="push_anywhere" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="push_anywhere" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="locales" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -196,6 +226,8 @@
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.appearance" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="CucumberRunConfigurationType" factoryName="Cucumber">
@@ -374,7 +406,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/anywhere_data_pub.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-47.74074">
+        <state vertical-scroll-proportion="0.33333334">
           <caret line="145" column="14" selection-start-line="145" selection-start-column="14" selection-end-line="145" selection-end-column="14" />
           <folding>
             <element signature="e#151#255#0" expanded="false" />
@@ -424,14 +456,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fake_anywhere_data.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="71" column="60" selection-start-line="71" selection-start-column="60" selection-end-line="71" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/fake_customer_record.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -440,18 +464,42 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/.rbenv/versions/2.2.2/lib/ruby/gems/2.2.0/gems/faker-1.6.3/lib/faker/hacker.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09677419">
+          <caret line="6" column="10" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/rest_actions.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.03218884">
-          <caret line="2" column="16" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="32" column="12" selection-start-line="32" selection-start-column="12" selection-end-line="32" selection-end-column="12" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/fake_sales_order.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.57939917">
-          <caret line="36" column="69" selection-start-line="36" selection-start-column="69" selection-end-line="36" selection-end-column="69" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="15" selection-start-line="0" selection-start-column="15" selection-end-line="0" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/locales/en.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.06451613">
+          <caret line="4" column="15" selection-start-line="4" selection-start-column="15" selection-end-line="4" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fake_anywhere_data.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.66129035">
+          <caret line="77" column="59" selection-start-line="77" selection-start-column="59" selection-end-line="77" selection-end-column="59" />
           <folding />
         </state>
       </provider>

@@ -3,45 +3,56 @@ require 'faker'
 class FakeSalesOrder
   attr_accessor :customer, :skus, :times
 
-  def initialize(*args)
+  def initialize(args)
     @customer = args[:customers]
     @skus     = args[:skus]
     @times    = args[:times]
   end
 
   def create_product_lines
-    # "productLines":
-    [
-        {
-            "quantity":             "12.345",
-            "salesUom":             {
-                "name": "bottle"
-            },
-            "netUnitPrice":         10.5,
-            "grossUnitPrice":       10.5,
-            "standardPrice":        10.5,
-            "discount":             10.5,
-            "netAmount":            {
-                "amount":              10.5,
-                "amountLocalCurrency": 10.5
-            },
-            "grossAmount":          {
-                "amount":              10.5,
-                "amountLocalCurrency": 10.5
-            },
-            "calculationBase":      "BY_DEFAULT",
-            "sku":                  {
-                "name": "Juice_Orange_Big",
-                "code": "P001"
-            },
-            "remark":               Faker::Hacker.say_something_smart,
+    productLines = []
 
-        }
-    ]
+    this_product = @skus.sample
+    random       = Random.new
+
+    @times.times do |t|
+
+      quantity = random.rand(1..3)
+      net      = random.rand(1.01..19.99).round(2)
+      gross    = random.rand(1.01..19.99).round(2)
+      standard = random.rand(20.01..100.99).round(2)
+      discount = random.rand(0.1..5.99).round(2)
+
+      netAmount   = quantity * net
+      grossAmount = quantity * gross
+
+      productLines << {
+          "quantity":        quantity,
+          "netUnitPrice":    net,
+          "grossUnitPrice":  gross,
+          "standardPrice":   standard,
+          "discount":        discount,
+          "netAmount":       {
+              "amount": netAmount
+          },
+          "grossAmount":     {
+              "amount": grossAmount
+          },
+          "calculationBase": "BY_DEFAULT",
+          "sku":             {
+              "name": this_product['name'],
+              "code": this_product['code']
+          },
+          "remark":          Faker::Hacker.say_something_smart,
+
+      }
+    end
+    productLines
   end
 
   def generate
     c                    = customer.sample
+    random               = Random.new
     base                 =
         {
             "channel":               {
@@ -68,31 +79,8 @@ class FakeSalesOrder
                 "isoCode": "USD"
             },
             "pricingMethod":         "NET_PRICE",
-            "netTotal":              {
-                "amount":              10.5,
-                "amountLocalCurrency": 10.5
-            },
-            "grossTotal":            {
-                "amount":              10.5,
-                "amountLocalCurrency": 10.5
-            },
-            "taxAmount":             {
-                "amount":              10.5,
-                "amountLocalCurrency": 10.5
-            },
-            "discount":              10.5,
-            "netDiscountSum":        {
-                "amount":              10.5,
-                "amountLocalCurrency": 10.5
-            },
-            "grossDiscountSum":      {
-                "amount":              10.5,
-                "amountLocalCurrency": 10.5
-            },
-            "totalWeight":           10.5,
-            "shippingCost":          10.5,
             "shippingAddress":       {
-                "countryCode":   Faker::Address.country_code,
+                "countryCode":   "US",
                 "stateCode":     Faker::Address.state_abbr,
                 "state":         Faker::Address.state,
                 "cityName":      Faker::Address.city,
@@ -102,10 +90,10 @@ class FakeSalesOrder
                 "mobile":        Faker::PhoneNumber.cell_phone,
                 "telephone":     Faker::PhoneNumber.cell_phone,
                 "recipientName": Faker::Name.name,
-                "displayName":   "#{Faker::Name.name} #{Faker::Address.street_address} #{Faker::Address.secondary_address} #{Faker::Address.city} #{Faker::Address.state} #{Faker::Address.postcode} #{Faker::Address.country} Cel: #{Faker::PhoneNumber.cell_phone} Tel: #{Faker::PhoneNumber.cell_phone}"
+                "displayName":   "#{Faker::Name.name} #{Faker::Address.street_address} #{Faker::Address.secondary_address} #{Faker::Address.city} #{Faker::Address.state} #{Faker::Address.postcode} US Cel: #{Faker::PhoneNumber.cell_phone} Tel: #{Faker::PhoneNumber.cell_phone}"
             },
             "billingAddress":        {
-                "countryCode":   Faker::Address.country_code,
+                "countryCode":   "US",
                 "stateCode":     Faker::Address.state_abbr,
                 "state":         Faker::Address.state,
                 "cityName":      Faker::Address.city,
@@ -115,76 +103,21 @@ class FakeSalesOrder
                 "mobile":        Faker::PhoneNumber.cell_phone,
                 "telephone":     Faker::PhoneNumber.cell_phone,
                 "recipientName": Faker::Name.name,
-                "displayName":   "#{Faker::Name.name} #{Faker::Address.street_address} #{Faker::Address.secondary_address} #{Faker::Address.city} #{Faker::Address.state} #{Faker::Address.postcode} #{Faker::Address.country} Cel: #{Faker::PhoneNumber.cell_phone} Tel: #{Faker::PhoneNumber.cell_phone}"
+                "displayName":   "#{Faker::Name.name} #{Faker::Address.street_address} #{Faker::Address.secondary_address} #{Faker::Address.city} #{Faker::Address.state} #{Faker::Address.postcode} US Cel: #{Faker::PhoneNumber.cell_phone} Tel: #{Faker::PhoneNumber.cell_phone}"
             },
-            "processorRemark":       "sample_processorRemark",
-            "customerRemark":        "sample_customerRemark",
-            "grossProfitMargin":     10.5,
-            "grossProfitAmount":     10.5,
-
+            "processorRemark":       Faker::Hacker.say_something_smart,
+            "customerRemark":        Faker::Hacker.say_something_smart,
             "shippingLines":         [
                                          {
-                                             "lineNumber":      1,
-                                             "netAmount":       {
-                                                 "amount":              10.5,
-                                                 "amountLocalCurrency": 10.5
+                                             "netAmount":   {
+                                                 "amount": random.rand(5.01..10.99).round(2)
                                              },
-                                             "grossAmount":     {
-                                                 "amount":              10.5,
-                                                 "amountLocalCurrency": 10.5
+                                             "grossAmount": {
+                                                 "amount": random.rand(5.01..10.99).round(2)
                                              },
-                                             "estimatedTax":    {
-                                                 "amount":              10.5,
-                                                 "amountLocalCurrency": 10.5
-                                             },
-                                             "remark":          "sample_remark",
-                                             "detailedTaxInfo": [
-                                                                    {
-                                                                        "name":                    "sample_name",
-                                                                        "taxDocumentType":         "SALES",
-                                                                        "country":                 "sample_country",
-                                                                        "state":                   "sample_state",
-                                                                        "city":                    "sample_city",
-                                                                        "zipCode":                 "sample_zipCode",
-                                                                        "validFor":                "ALL",
-                                                                        "taxBusinessPartnerGroup": "LIABLE",
-                                                                        "taxClass":                {
-                                                                            "description": "Standard"
-                                                                        },
-                                                                        "rateType":                "RATIO",
-                                                                        "rateValue":               10.5,
-                                                                        "taxAmount":               10.5,
-                                                                        "inputAmount":             10.5,
-                                                                        "taxDefinitionId":         1,
-                                                                        "taxDocumentKey":          1
-                                                                    }
-                                                                ]
+                                             "remark":      Faker::Hacker.say_something_smart,
                                          }
                                      ],
-            "detailedTaxInfo":       [
-                                         {
-                                             "name":                    "sample_name",
-                                             "taxDocumentType":         "SALES",
-                                             "country":                 "US",
-                                             "state":                   "TX",
-                                             "city":                    "Dallas",
-                                             "zipCode":                 "75078",
-                                             "validFor":                "ALL",
-                                             "taxBusinessPartnerGroup": "LIABLE",
-                                             "taxClass":                {
-                                                 "description": "Standard"
-                                             },
-                                             "rateType":                "RATIO",
-                                             "rateValue":               10.5,
-                                             "taxAmount":               10.5,
-                                             "inputAmount":             10.5,
-                                             "taxDefinitionId":         1,
-                                             "taxDocumentKey":          1
-                                         }
-                                     ],
-            "paymentTerm":           {
-                "name": "sample_name"
-            },
             "headerCalculationBase": "BY_DEFAULT"
         }
     base["productLines"] = create_product_lines

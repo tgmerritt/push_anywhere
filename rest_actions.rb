@@ -28,7 +28,7 @@ class RestActions
       puts "\n\n"
     end
     puts "\n\n"
-    puts "Customer #{response.body} created successfully!"
+    puts "#{endpoint.capitalize} #{response.body} created successfully!"
     puts "\n\n"
     sleep(1)
   end
