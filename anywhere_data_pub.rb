@@ -14,6 +14,7 @@ class PushAnywhere
     puts "Please choose from the following options:"
     puts "1. Get a refresh token (API authorization)"
     puts "2. Make an API request"
+    puts "Q to quit"
     get_first_choice
   end
 
@@ -28,23 +29,67 @@ class PushAnywhere
       # set_api_values
       is_response_valid?(authenticate_with_api)
       run_api_menu
-    else
+    elsif input == "2"
       run_api_menu
+    elsif "Q".casecmp(input) == 0
+      exit
+    else
+      puts "Seriously?  You had three choices and you messed up?\n"
+      sleep(5)
+      puts "Intentional delay - you waste my time I waste yours.\n\n\n"
+      sleep(2)
+      run_step_1
     end
   end
 
   def run_api_menu
-    puts "Would you like to GET, POST, or PATCH ?  Please type GET, POST, or PATCH below:"
+    puts "Would you like to GET, POST, or PATCH ?  Please type GET, POST, or PATCH below:\n"
     action = gets.chomp
+    # Could re-write with CASE
     if action == "GET"
-      puts "pending"
+      run_new_get
     elsif action == "POST"
-      puts "pending"
+      run_new_post
     elsif action == "PATCH"
-      puts "pending"
+      run_new_patch
+    elsif action == "DELETE"
+      puts "I didn't implement DELETE on purpose - you're trolling...\n\n"
+      run_step_1
     else
       puts "That is not a valid option!"
+      run_step_1
     end
+  end
+
+  def run_new_get
+    puts "Type in the endpoint you'd like to access, for example Customers or Customers/count"
+    puts "The initial / before the endpoint is unnecessary, but a sub endpoint requires the /"
+    puts "Do not type a / at the end of a top-level endpoint, e.g. Do NOT type Customers/ - just type Customers"
+    puts "For a full list of available endpoints - https://doc-us.sapanywhere.com"
+    puts "You'll have a chance to enter the ID of a record after entering the initial endpoint (optional)"
+    endpoint = gets.chomp
+    puts "ID of an individual record? (enter for none)"
+    record_id = gets.chomp
+    text = record_id.blank? ? "Making GET request to #{endpoint}" : "Making GET request to #{endpoint} for record # #{record_id}"
+    puts text
+    make_get_request(endpoint, record_id)
+  end
+
+  def run_new_post
+
+  end
+
+  def run_new_patch
+
+  end
+
+  def make_get_request(endpoint, record_id)
+    target = record_id.blank? ? endpoint : "#{endpoint}/#{record_id}"
+    data = RestClient.get "https://api-us.sapanywhere.com:443/v1/#{target}?access_token=#{@access_token}", { 'Authorization' => "Bearer #{@access_token}", 'Accept' => 'application/json' }
+    puts JSON.pretty_generate(data)
+    puts "\n\n\n"
+    sleep(1)
+    run_step_1
   end
 
   def set_api_values
