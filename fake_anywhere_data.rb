@@ -58,7 +58,7 @@ class FakeAnywhereData
   end
 
   def execute_customer_record_create(qty)
-    1.times do |t|
+    qty.times do |t|
       body = FakeCustomerRecord.new.generate
       RestActions.new(endpoint: "Customers", body: body, access_token: @access_token).post_request
     end

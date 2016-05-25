@@ -1,4 +1,5 @@
 require 'rest-client'
+require 'json'
 
 class RestActions
   attr_accessor :body, :endpoint, :record_id, :access_token
@@ -19,9 +20,15 @@ class RestActions
   end
 
   def post_request
-    response = RestClient.post "https://api-us.sapanywhere.com:443/v1/#{@endpoint}?access_token=#{@access_token}", @body, { 'Authorization' => "Bearer #{@access_token}", 'Accept' => 'application/json' }
-    puts JSON.pretty_generate(response)
-    puts "\n\n\n"
+    begin
+      response = RestClient.post("https://api-us.sapanywhere.com:443/v1/#{@endpoint}?access_token=#{@access_token}", @body.to_json, { 'Authorization' => "Bearer #{@access_token}", 'Accept' => 'application/json', :content_type => 'application/json;charset=UTF-8' })
+    rescue => e
+      puts e.response
+      puts "\n\n"
+    end
+    puts "\n\n"
+    puts "Customer #{response.body} created successfully!"
+    puts "\n\n"
     sleep(1)
   end
 
