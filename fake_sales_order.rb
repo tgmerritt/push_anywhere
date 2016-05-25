@@ -1,4 +1,5 @@
 require 'faker'
+require 'as-duration'
 
 class FakeSalesOrder
   attr_accessor :customer, :skus, :times
@@ -63,9 +64,9 @@ class FakeSalesOrder
                 "code": c["customerCode"]
             },
             "contactPerson":         {},
-            "orderTime":             (Time.now - 10000000).iso8601,
-            "deliveryTime":          (Time.now - 1000000).iso8601,
-            "shippingTime":          (Time.now - 5000000).iso8601,
+            "orderTime":             Faker::Time.between(25.days.ago, 20.days.ago, :day).iso8601,
+            "deliveryTime":          Faker::Time.between(6.days.ago, Date.today, :all).iso8601,
+            "shippingTime":          Faker::Time.between(15.days.ago, 7.days.ago, :morning).iso8601,
             "carrier":               {
                 "id":   1,
                 "name": "FedEx"

@@ -4,6 +4,7 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="PROVIDED" name="as-duration (v0.1.0, rbenv: 2.2.2) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="domain_name (v0.5.20160310, rbenv: 2.2.2) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="faker (v1.6.3, rbenv: 2.2.2) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="http-cookie (v1.0.2, rbenv: 2.2.2) [gem]" level="application" />
