@@ -2,7 +2,8 @@
 
 require 'rest-client'
 require 'json'
-require 'fake_anywhere_data'
+require_relative 'fake_anywhere_data'
+require_relative 'rest_actions'
 
 class PushAnywhere
 
@@ -106,27 +107,18 @@ class PushAnywhere
   end
 
   def make_get_request(endpoint, record_id)
-    target   = record_id.empty? ? endpoint : "#{endpoint}/#{record_id}"
-    response = RestClient.get "https://api-us.sapanywhere.com:443/v1/#{target}?access_token=#{@access_token}", { 'Authorization' => "Bearer #{@access_token}", 'Accept' => 'application/json' }
-    puts JSON.pretty_generate(JSON.parse(response))
-    puts "\n\n\n"
-    sleep(1)
+    action = RestActions.new(endpoint: endpoint, record_id: record_id, access_token: @access_token)
+    action.get_request
     run_step_1
   end
 
   def make_post_request(endpoint, body)
-    response = RestClient.post "https://api-us.sapanywhere.com:443/v1/#{endpoint}?access_token=#{@access_token}", body, { 'Authorization' => "Bearer #{@access_token}", 'Accept' => 'application/json' }
-    puts JSON.pretty_generate(response)
-    puts "\n\n\n"
-    sleep(1)
+    RestActions.new(endpoint: endpoint, body: body, access_token: @access_token)
     run_step_1
   end
 
   def make_patch_request(endpoint, record_id, body)
-    response = RestClient.patch "https://api-us.sapanywhere.com:443/v1/#{endpoint}/#{record_id}?access_token=#{@access_token}", body, { 'Authorization' => "Bearer #{@access_token}", 'Accept' => 'application/json' }
-    puts JSON.pretty_generate(response)
-    puts "\n\n\n"
-    sleep(1)
+    RestActions.new(endpoint: endpoint, record_id: record_id, body: body, access_token: @access_token)
     run_step_1
   end
 

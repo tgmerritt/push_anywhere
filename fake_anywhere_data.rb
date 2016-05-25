@@ -1,3 +1,6 @@
+require_relative 'fake_customer_record'
+require_relative 'fake_sales_order'
+
 class FakeAnywhereData
 
   def initialize(access_token)
@@ -36,6 +39,24 @@ class FakeAnywhereData
 
   def randomize_records
     puts "Due to the API throughput limitations, this may take some time..."
+    exit
+  end
+
+  def ready_customer_records
+    puts "How many records would you like to create? (Enter a number between 1 and 10)"
+    response = gets.chomp
+    check_quantity(response)
+  end
+
+  def check_quantity(response)
+    unless response <= 10
+      puts "I said between 1 and 10..."
+      ready_customer_records
+    end
+    execute_customer_record_create
+  end
+
+  def execute_customer_record_create
 
   end
 

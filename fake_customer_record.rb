@@ -2,8 +2,7 @@ require 'faker'
 
 class FakeCustomerRecord
 
-  def initialize(*args)
-    @quantity = args['quantity']
+  def initialize
   end
 
   def generate
@@ -34,43 +33,25 @@ class FakeCustomerRecord
             "code": "en-US"
         },
         "gender":                 ["MALE", "FEMALE"].sample,
-        "dateOfBirth":            Faker::Date.backward(10950),
-        "lastMarketingCampaign":  Faker::Date.backward(365),
         "marketingStatus":        "SUBSCRIBED",
         "taxType":                "LIABLE",
-        "creationTime":           "2015-09-22T06:10:00.000Z",
-        "updateTime":             "2015-09-22T06:10:00.000Z",
-        "membershipEnabled":      false,
-        "membershipBalance":      1,
-        "membershipLevelInfo":    {
-            "name": "sample_name"
-        },
-        "customerPriceListLines": [
-                                      {
-                                          "customFields": {
-                                              "ext_default_UDF1": "value",
-                                              "ext_default_UDF2": 12
-                                          },
-                                          "priceListId":  1
-                                      }
-                                  ],
         "customerAddressLines":   [
                                       {
                                           "address":           {
-                                              "countryCode":   "US",
-                                              "stateCode":     "CA",
-                                              "state":         "Freistaat Bayern",
-                                              "cityName":      "Pasadena",
-                                              "street1":       "100 West California Boulevard",
-                                              "street2":       "Room202 Building7",
-                                              "zipCode":       "91105",
-                                              "mobile":        "(626) 397-5000",
-                                              "telephone":     "(626) 397-5000",
-                                              "recipientName": "Peter Wright",
-                                              "displayName":   "Peter Wright 100 West California Boulevard Room202 Building7 Pasadena California 91105 United States Cel: (626) 397-5000 Tel: (626) 397-5000"
+                                              "countryCode":   Faker::Address.country_code,
+                                              "stateCode":     Faker::Address.state_abbr,
+                                              "state":         Faker::Address.state,
+                                              "cityName":      Faker::Address.city,
+                                              "street1":       Faker::Address.street_address,
+                                              "street2":       Faker::Address.secondary_address,
+                                              "zipCode":       Faker::Address.postcode,
+                                              "mobile":        Faker::PhoneNumber.cell_phone,
+                                              "telephone":     Faker::PhoneNumber.cell_phone,
+                                              "recipientName": Faker::Name.name,
+                                              "displayName":   "#{Faker::Name.name} #{Faker::Address.street_address} #{Faker::Address.secondary_address} #{Faker::Address.city} #{Faker::Address.state} #{Faker::Address.postcode} #{Faker::Address.country} Cel: #{Faker::PhoneNumber.cell_phone} Tel: #{Faker::PhoneNumber.cell_phone}"
                                           },
-                                          "defaultBillingTo":  false,
-                                          "defaultShippingTo": false
+                                          "defaultBillingTo":  true,
+                                          "defaultShippingTo": true
                                       }
                                   ]
     }
