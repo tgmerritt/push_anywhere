@@ -79,7 +79,15 @@ class PushAnywhere
   end
 
   def run_new_post
-
+    puts "Type in the endpoint you'd like to access, for example Customers or Customers/count"
+    puts "The initial / before the endpoint is unnecessary, but a sub endpoint requires the /"
+    puts "Do not type a / at the end of a top-level endpoint, e.g. Do NOT type Customers/ - just type Customers"
+    puts "For a full list of available endpoints - https://doc-us.sapanywhere.com"
+    endpoint = gets.chomp
+    puts "Paste in the JSON you'd like to POST on the next line (it's a script utility - implement intelligence yourself!"
+    body = gets.chomp
+    puts "Making POST request to #{endpoint}"
+    make_post_request(endpoint, body)
   end
 
   def run_new_patch
@@ -92,8 +100,16 @@ class PushAnywhere
 
   def make_get_request(endpoint, record_id)
     target = record_id.blank? ? endpoint : "#{endpoint}/#{record_id}"
-    data = RestClient.get "https://api-us.sapanywhere.com:443/v1/#{target}?access_token=#{@access_token}", { 'Authorization' => "Bearer #{@access_token}", 'Accept' => 'application/json' }
-    puts JSON.pretty_generate(data)
+    response = RestClient.get "https://api-us.sapanywhere.com:443/v1/#{target}?access_token=#{@access_token}", { 'Authorization' => "Bearer #{@access_token}", 'Accept' => 'application/json' }
+    puts JSON.pretty_generate(response)
+    puts "\n\n\n"
+    sleep(1)
+    run_step_1
+  end
+
+  def make_post_request(endpoint, body)
+    response = RestClient.post "https://api-us.sapanywhere.com:443/v1/#{endpoint}?access_token=#{@access_token}", body, { 'Authorization' => "Bearer #{@access_token}", 'Accept' => 'application/json' }
+    puts JSON.pretty_generate(response)
     puts "\n\n\n"
     sleep(1)
     run_step_1
