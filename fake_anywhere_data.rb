@@ -62,6 +62,7 @@ class FakeAnywhereData
   end
 
   def execute_customer_record_create(qty)
+    puts "Starting to create Customer records...  Please give the API time to respond..."
     qty.times do |t|
       body = FakeCustomerRecord.new.generate
       RestActions.new(endpoint: "Customers", body: body, access_token: @access_token).post_request
@@ -69,6 +70,7 @@ class FakeAnywhereData
   end
 
   def execute_sales_order_create(qty)
+    puts "Starting to create Sales Order records...  Please give the API time to respond..."
     r         = RestActions.new(access_token: @access_token)
     customers = r.get_possible_customers
     skus      = r.get_possible_skus
