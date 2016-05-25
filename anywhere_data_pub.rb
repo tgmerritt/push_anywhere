@@ -2,7 +2,7 @@
 
 require 'rest-client'
 require 'json'
-require 'faker'
+require 'fake_anywhere_data'
 
 class PushAnywhere
 
@@ -38,11 +38,7 @@ class PushAnywhere
     elsif "Q".casecmp(input) == 0
       exit
     else
-      puts "Seriously?  You had four choices and you messed up?\n"
-      sleep(5)
-      puts "Intentional delay - you waste my time I waste yours.\n\n\n"
-      sleep(2)
-      run_step_1
+      you_screwed_up
     end
   end
 
@@ -74,7 +70,7 @@ class PushAnywhere
     endpoint = gets.chomp
     puts "ID of an individual record? (enter for none)"
     record_id = gets.chomp
-    text = record_id.blank? ? "Making GET request to #{endpoint}" : "Making GET request to #{endpoint} for record # #{record_id}"
+    text      = record_id.empty? ? "Making GET request to #{endpoint}" : "Making GET request to #{endpoint} for record # #{record_id}"
     puts text
     make_get_request(endpoint, record_id)
   end
@@ -85,24 +81,34 @@ class PushAnywhere
     puts "Do not type a / at the end of a top-level endpoint, e.g. Do NOT type Customers/ - just type Customers"
     puts "For a full list of available endpoints - https://doc-us.sapanywhere.com"
     endpoint = gets.chomp
-    puts "Paste in the JSON you'd like to POST on the next line (it's a script utility - implement intelligence yourself!"
-    body = gets.chomp
+    puts "Paste in the JSON you'd like to POST on the next line (it's a script utility - implement intelligence yourself!)"
+    body = gets.chomp.to_json
     puts "Making POST request to #{endpoint}"
     make_post_request(endpoint, body)
   end
 
   def run_new_patch
-
+    puts "Type in the endpoint you'd like to access, for example Customers or Customers/count"
+    puts "The initial / before the endpoint is unnecessary, but a sub endpoint requires the /"
+    puts "Do not type a / at the end of a top-level endpoint, e.g. Do NOT type Customers/ - just type Customers"
+    puts "For a full list of available endpoints - https://doc-us.sapanywhere.com"
+    endpoint = gets.chomp
+    puts "Enter the ID of the record you'd like to update"
+    record_id = gets.chomp
+    puts "Paste in the JSON you'd like to POST on the next line (it's a script utility - implement intelligence yourself!)"
+    body = gets.chomp.to_json
+    puts "Making PATCH request to #{endpoint}"
+    make_patch_request(endpoint, record_id, body)
   end
 
   def run_fake_data
-
+    FakeAnywhereData.new(@access_token)
   end
 
   def make_get_request(endpoint, record_id)
-    target = record_id.blank? ? endpoint : "#{endpoint}/#{record_id}"
+    target   = record_id.empty? ? endpoint : "#{endpoint}/#{record_id}"
     response = RestClient.get "https://api-us.sapanywhere.com:443/v1/#{target}?access_token=#{@access_token}", { 'Authorization' => "Bearer #{@access_token}", 'Accept' => 'application/json' }
-    puts JSON.pretty_generate(response)
+    puts JSON.pretty_generate(JSON.parse(response))
     puts "\n\n\n"
     sleep(1)
     run_step_1
@@ -110,6 +116,14 @@ class PushAnywhere
 
   def make_post_request(endpoint, body)
     response = RestClient.post "https://api-us.sapanywhere.com:443/v1/#{endpoint}?access_token=#{@access_token}", body, { 'Authorization' => "Bearer #{@access_token}", 'Accept' => 'application/json' }
+    puts JSON.pretty_generate(response)
+    puts "\n\n\n"
+    sleep(1)
+    run_step_1
+  end
+
+  def make_patch_request(endpoint, record_id, body)
+    response = RestClient.patch "https://api-us.sapanywhere.com:443/v1/#{endpoint}/#{record_id}?access_token=#{@access_token}", body, { 'Authorization' => "Bearer #{@access_token}", 'Accept' => 'application/json' }
     puts JSON.pretty_generate(response)
     puts "\n\n\n"
     sleep(1)
@@ -128,7 +142,7 @@ class PushAnywhere
   end
 
   def authenticate_with_api
-    RestClient.post 'https://eap-idp-us.sapanywhere.com:443/sld/oauth2/token', :client_id => @api_key, :client_secret => @api_secret, :refresh_token => @refresh_token, :grant_type => 'refresh_token'
+    RestClient.post 'https://accounts-us.sapanywhere.com:443/sld/oauth2/token', :client_id => @api_key, :client_secret => @api_secret, :refresh_token => @refresh_token, :grant_type => 'refresh_token'
   end
 
   def is_response_valid?(response)
@@ -143,6 +157,14 @@ class PushAnywhere
     @api_key       = '4660200588335353-7BppDmr4rnd3ZOXRbHMo6zAEfsRR9kZg'
     @api_secret    = 'vXNR_NXBVtXHUJsLjuMfnTMiWrwp'
     @refresh_token = '61c49b95-64df-4662-9cb0-cf078d02f69c'
+  end
+
+  def you_screwed_up
+    puts "Seriously?  You had four choices and you messed up?\n"
+    sleep(5)
+    puts "Intentional delay - you waste my time I waste yours.\n\n\n"
+    sleep(2)
+    run_step_1
   end
 
 end
