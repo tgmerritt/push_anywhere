@@ -12,16 +12,16 @@ class FakeSalesOrder
   def create_product_lines
     productLines = []
 
-    this_product = @skus.sample
-    random       = Random.new
+    random = Random.new
 
     @times.times do |t|
 
-      quantity = random.rand(1..3)
-      net      = random.rand(1.01..19.99).round(2)
-      gross    = random.rand(1.01..19.99).round(2)
-      standard = random.rand(20.01..100.99).round(2)
-      discount = random.rand(0.1..5.99).round(2)
+      this_product = @skus.sample
+      quantity     = random.rand(1..3)
+      net          = random.rand(1.01..19.99).round(2)
+      gross        = random.rand(1.01..19.99).round(2)
+      standard     = random.rand(20.01..100.99).round(2)
+      discount     = random.rand(0.1..5.99).round(2)
 
       netAmount   = quantity * net
       grossAmount = quantity * gross
