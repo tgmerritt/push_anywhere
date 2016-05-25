@@ -2,6 +2,7 @@
 
 require 'rest-client'
 require 'json'
+require 'faker'
 
 class PushAnywhere
 
