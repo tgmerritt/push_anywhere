@@ -1,10 +1,11 @@
 require_relative 'fake_customer_record'
 require_relative 'fake_sales_order'
+require_relative 'rest_actions'
 
 class FakeAnywhereData
 
   def initialize(access_token)
-    puts "Let's get ready to FAKE IT TIL WE MAKE IT\n\n"
+    puts "\n\nLet's get ready to FAKE IT TIL WE MAKE IT\n\n"
     @access_token = access_token
     faker_step_1
   end
@@ -44,20 +45,23 @@ class FakeAnywhereData
 
   def ready_customer_records
     puts "How many records would you like to create? (Enter a number between 1 and 10)"
-    response = gets.chomp
-    check_quantity(response)
+    qty = gets.chomp
+    check_quantity(qty)
   end
 
-  def check_quantity(response)
-    unless response <= 10
+  def check_quantity(qty)
+    unless qty.to_i <= 10
       puts "I said between 1 and 10..."
       ready_customer_records
     end
-    execute_customer_record_create
+    execute_customer_record_create(qty)
   end
 
-  def execute_customer_record_create
-
+  def execute_customer_record_create(qty)
+    1.times do |t|
+      body = FakeCustomerRecord.new.generate
+      RestActions.new(endpoint: "Customers", body: body, access_token: @access_token).post_request
+    end
   end
 
   def you_screwed_up

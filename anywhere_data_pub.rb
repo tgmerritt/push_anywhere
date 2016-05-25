@@ -31,7 +31,7 @@ class PushAnywhere
       set_static_api_values
       # set_api_values
       is_response_valid?(authenticate_with_api)
-      run_api_menu
+      run_step_1
     elsif input == "2"
       run_api_menu
     elsif input == "3"
@@ -143,6 +143,7 @@ class PushAnywhere
       run_step_1
     end
     @access_token = JSON.parse(response)["access_token"]
+    puts "\n\nSuccess! Access Token is #{@access_token}\n\n"
   end
 
   def set_static_api_values
