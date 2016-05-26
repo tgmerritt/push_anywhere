@@ -41,6 +41,10 @@ class FakeRestActions
     JSON.parse(RestClient.get "https://api-us.sapanywhere.com:443/v1/SalesOrders?expand=*&orderBy=creationTime desc&limit=#{qty}&filter=invoicedTotal eq 0&access_token=#{@access_token}", { 'Authorization' => "Bearer #{@access_token}", 'Accept' => 'application/json' })
   end
 
+  def get_recent_sales_invoices(qty)
+    JSON.parse(RestClient.get "https://api-us.sapanywhere.com:443/v1/SalesInvoices?expand=*&orderBy=creationTime desc&limit=#{qty}&access_token=#{@access_token}", { 'Authorization' => "Bearer #{@access_token}", 'Accept' => 'application/json' })
+  end
+
   def get_possible_customers
     response = RestClient.get "https://api-us.sapanywhere.com:443/v1/Customers?access_token=#{@access_token}&select=id,customerName,customerCode", { 'Authorization' => "Bearer #{@access_token}", 'Accept' => 'application/json' }
     (JSON.parse(response)).reject { |h| h['customerName'].nil? }
