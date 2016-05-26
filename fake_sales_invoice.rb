@@ -12,47 +12,9 @@ class FakeSalesInvoice
   def generate
     base                  = {
         "exchangeRate":    1,
-        "status":          "CLOSED",
-        "paymentStatus":   "FULLY_PAID",
-        "pricingMethod":   "NET_PRICE",
         "postingTime":     Faker::Time.between(5.days.ago, Date.today, :day).iso8601,
         "dueTime":         Faker::Time.forward(30, :day).iso8601,
-        "manuallyClosed":  false,
         "remark":          Faker::Hipster.sentence,
-        "netTotal":        {
-            "amount": @sales_order['netTotal'],
-        },
-        "grossTotal":      {
-            "amount": @sales_order['grossTotal'],
-        },
-        "taxAmount":       {
-            "amount": @sales_order['taxAmount'],
-        },
-        "amountDue":       {
-            "amount": @sales_order['amountDue'],
-        },
-        "customer":        {
-            "id":   @customer['id'],
-            "name": @customer['name'],
-            "code": @customer['code']
-        },
-        "currency":        {
-            "code":    "USD",
-            "isoCode": "USD"
-        },
-        "shippingAddress": {
-            "countryCode":   "US",
-            "stateCode":     @sales_order['shippingAddress']['stateCode'],
-            "state":         @sales_order['shippingAddress']['state'],
-            "cityName":      @sales_order['shippingAddress']['cityName'],
-            "street1":       @sales_order['shippingAddress']['street1'],
-            "street2":       @sales_order['shippingAddress']['street2'],
-            "zipCode":       @sales_order['shippingAddress']['zipCode'],
-            "mobile":        @sales_order['shippingAddress']['mobile'],
-            "telephone":     @sales_order['shippingAddress']['telephone'],
-            "recipientName": @sales_order['shippingAddress']['recipientName'],
-            "displayName":   @sales_order['shippingAddress']['displayName']
-        },
         "billingAddress":  {
             "countryCode":   "US",
             "state":         @sales_order['billingAddress']['state'],
@@ -77,31 +39,15 @@ class FakeSalesInvoice
       invoiceLines <<
           {
               "baseDocument":    {
-                  "baseId":         key['id'],
+                  "baseId":         @sales_order['id'],
                   "baseNumber":     '',
                   "baseType":       "SalesOrder",
-                  "baseLineId":     key['id'],
+                  "baseLineId":     @sales_order['id'],
                   "baseLineNumber": ''
               },
               "remark":          Faker::Hipster.sentence,
-              "sku":             {
-                  "id":   key['sku']['id'],
-                  "name": key['sku']['name'],
-                  "code": key['sku']['code']
-              },
-              "quantity":        1,
-              "calculationBase": "BY_TOTAL",
               "netUnitPrice":    key['sku']['netUnitPrice'],
-              "grossUnitPrice":  key['sku']['grossUnitPrice'],
-              "netAmount":       {
-                  "amount": key['netAmount'],
-              },
-              "grossAmount":     {
-                  "amount": key['grossAmount'],
-              },
-              "taxAmount":       {
-                  "amount": key['taxAmount'],
-              }
+              "grossUnitPrice":  key['sku']['grossUnitPrice']
           }
     end
     invoiceLines
@@ -118,16 +64,7 @@ class FakeSalesInvoice
                 "baseLineId":     @sales_order['shippingLines']['baseLineId'],
                 "baseLineNumber": null
             },
-            "remark":       Faker::Hipster.sentence,
-            "netAmount":    {
-                "amount": @sales_order['shippingLines']['netAmount'],
-            },
-            "grossAmount":  {
-                "amount": @sales_order['shippingLines']['grossAmount'],
-            },
-            "taxAmount":    {
-                "amount": @sales_order['shippingLines']['taxAmount'],
-            }
+            "remark":       Faker::Hipster.sentence
         }
     shippingLines
   end

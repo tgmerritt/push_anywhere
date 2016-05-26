@@ -91,13 +91,17 @@ class FakeAnywhereData
   end
 
   def execute_invoice_create(qty)
-    puts "Getting recent Sales Order...\n"
-    sales_order = JSON.parse(FakeRestActions.new(endpoint: "SalesOrders", record_id: "633", access_token: @access_token).get_request)
-    puts "Getting associated Customer record...\n"
-    customer    = JSON.parse(FakeRestActions.new(endpoint: "Customers", record_id: sales_order["customer"]["id"].to_s, access_token: @access_token).get_request)
-    binding.pry
-    body = FakeSalesInvoice.new(customer: customer, sales_order: sales_order).generate
-    puts JSON.pretty_generate(JSON.parse(body.to_json))
+    puts "Getting recent Sales Orders...\n"
+    sales_orders = FakeRestActions.new(access_token: @access_token).get_recent_sales_orders(qty)
+    sales_orders.each do |sales_order|
+      puts "Getting associated Customer record for SalesOrder #{sales_order["id"]}\n"
+      customer = JSON.parse(FakeRestActions.new(endpoint: "Customers", record_id: sales_order["customer"]["id"].to_s, access_token: @access_token).get_request)
+      body = FakeSalesInvoice.new(customer: customer, sales_order: sales_order).generate
+      puts JSON.pretty_generate(JSON.parse(body.to_json))
+    end
+
+    # sales_order  = JSON.parse(FakeRestActions.new(endpoint: "SalesOrders", record_id: "633", access_token: @access_token).get_request)
+
   end
 
   def you_screwed_up
