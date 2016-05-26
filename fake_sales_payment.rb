@@ -9,13 +9,10 @@ class FakeSalesPayment
   def generate
     {
         "customer":           {
-            "name": @customer['name'],
-            "code": @customer['code']
+            "name": @customer['displayName'],
+            "code": @customer['customerCode']
         },
         "postingTime":        Faker::Time.forward(3, :morning).iso8601,
-        "amount":             {
-            "amount": @invoice['grossTotal']['amount'],
-        },
         "remark":             Faker::Hipster.sentence,
         "currency":           {
             "code":    "USD",
@@ -28,9 +25,6 @@ class FakeSalesPayment
                                           "id":   @invoice['id'],
                                           "type": "Invoice"
                                       },
-                                      "totalAmount":         {
-                                          "amount": @invoice['grossTotal']['amount'],
-                                      },
                                       "appliedAmount":       {
                                           "amount": @invoice['grossTotal']['amount'],
                                       }
@@ -39,7 +33,8 @@ class FakeSalesPayment
         "paymentMethodLines": [
                                   {
                                       "paymentMethod": {
-                                          "type": ["CASH", "PAYPAL_PRO", "STRIPE", "MEMBERSHIP_POINTS"].sample
+                                          "name": "CASH",
+                                          "type": "CASH"
                                       },
                                       "amount":        {
                                           "amount": @invoice['grossTotal']['amount'],

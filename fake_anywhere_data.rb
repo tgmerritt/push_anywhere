@@ -129,9 +129,10 @@ class FakeAnywhereData
     invoices = FakeRestActions.new(access_token: @access_token).get_recent_sales_invoices(qty)
     invoices.each do |invoice|
       puts "Getting associated Customer record for SalesInvoice #{invoice['id']}\n"
-      customer = JSON.parse(FakeRestActions.new(endpoints: "Customers", record_id: invoice["customer"]["id"].to_s, access_token: @access_token).get_request)
+      customer = JSON.parse(FakeRestActions.new(endpoint: "Customers", record_id: invoice["customer"]["id"].to_s, access_token: @access_token).get_request)
       body = FakeSalesPayment.new(customer: customer, invoice: invoice).generate
-      FakeRestActions.new(endpoint: "Payment", body: body, access_token: @access_token).post_request
+      # puts JSON.pretty_generate(JSON.parse(body.to_json))
+      FakeRestActions.new(endpoint: "Payments", body: body, access_token: @access_token).post_request
     end
   end
 
