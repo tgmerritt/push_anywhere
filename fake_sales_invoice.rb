@@ -42,7 +42,7 @@ class FakeSalesInvoice
                   "baseId":         @sales_order['id'],
                   "baseNumber":     '',
                   "baseType":       "SalesOrder",
-                  "baseLineId":     @sales_order['id'],
+                  "baseLineId":     key['id'],
                   "baseLineNumber": ''
               },
               "remark":          Faker::Hipster.sentence,
@@ -58,11 +58,11 @@ class FakeSalesInvoice
     shippingLines <<
         {
             "baseDocument": {
-                "baseId":         @sales_order['shippingLines']['baseId'],
-                "baseNumber":     null,
+                "baseId":         @sales_order['id'],
+                "baseNumber":     '',
                 "baseType":       "SalesOrder",
-                "baseLineId":     @sales_order['shippingLines']['baseLineId'],
-                "baseLineNumber": null
+                "baseLineId":     @sales_order['shippingLines'][0]['id'],
+                "baseLineNumber": ''
             },
             "remark":       Faker::Hipster.sentence
         }

@@ -20,14 +20,14 @@ class FakeRestActions
   def post_request
     begin
       response = RestClient.post("https://api-us.sapanywhere.com:443/v1/#{@endpoint}?access_token=#{@access_token}", @body.to_json, { 'Authorization' => "Bearer #{@access_token}", 'Accept' => 'application/json', :content_type => 'application/json;charset=UTF-8' })
+      puts "\n\n"
+      puts "#{endpoint.capitalize} created successfully!"
+      puts "\n\n"
+      sleep(1)
     rescue => e
       puts e.response
       puts "\n\n"
     end
-    puts "\n\n"
-    puts "#{endpoint.capitalize} created successfully!"
-    puts "\n\n"
-    sleep(1)
   end
 
   def patch_request
@@ -38,7 +38,7 @@ class FakeRestActions
   end
 
   def get_recent_sales_orders(qty)
-    JSON.parse(RestClient.get "https://api-us.sapanywhere.com:443/v1/SalesOrders?expand=*&orderBy=creationTime desc&limit=#{qty}&access_token=#{@access_token}", { 'Authorization' => "Bearer #{@access_token}", 'Accept' => 'application/json' })
+    JSON.parse(RestClient.get "https://api-us.sapanywhere.com:443/v1/SalesOrders?expand=*&orderBy=creationTime desc&limit=#{qty}&filter=invoicedTotal eq 0&access_token=#{@access_token}", { 'Authorization' => "Bearer #{@access_token}", 'Accept' => 'application/json' })
   end
 
   def get_possible_customers
