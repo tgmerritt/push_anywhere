@@ -1,6 +1,7 @@
 require_relative 'fake_customer_record'
 require_relative 'fake_sales_order'
-require_relative 'rest_actions'
+require_relative 'fake_rest_actions'
+require_relative 'fake_sales_invoice'
 
 class FakeAnywhereData
 
@@ -15,7 +16,8 @@ class FakeAnywhereData
     puts "1. Seed 50 random records"
     puts "2. Create fake Customers"
     puts "3. Create fake Sales Orders"
-    puts "Q to quit"
+    puts "4. Create fake Invoices (requires Sales Order and Customer)"
+    puts "Q to quit\n"
     get_first_fake_response
   end
 
@@ -31,6 +33,8 @@ class FakeAnywhereData
       ready_customer_records
     elsif input == "3"
       ready_sales_order_records
+    elsif input == "4"
+      ready_invoice_records
     elsif "Q".casecmp(input) == 0
       exit
     else
@@ -39,7 +43,7 @@ class FakeAnywhereData
   end
 
   def randomize_records
-    puts "Due to the API throughput limitations, this may take some time..."
+    puts "Due to the API throughput limitations, this may take some time...\n"
     exit
   end
 
@@ -51,8 +55,12 @@ class FakeAnywhereData
     execute_sales_order_create(check_quantity)
   end
 
+  def ready_invoice_records
+    execute_invoice_create(check_quantity)
+  end
+
   def check_quantity
-    puts "How many records would you like to create? (Enter a number between 1 and 10)"
+    puts "How many records would you like to create? (Enter a number between 1 and 10)\n"
     qty = gets.chomp.to_i
     unless qty <= 10
       puts "\nI said between 1 and 10...\n"
@@ -62,24 +70,34 @@ class FakeAnywhereData
   end
 
   def execute_customer_record_create(qty)
-    puts "Starting to create Customer records...  Please give the API time to respond..."
+    puts "Starting to create Customer records...  Please give the API time to respond...\n"
     qty.times do |t|
       body = FakeCustomerRecord.new.generate
-      RestActions.new(endpoint: "Customers", body: body, access_token: @access_token).post_request
+      FakeRestActions.new(endpoint: "Customers", body: body, access_token: @access_token).post_request
     end
   end
 
   def execute_sales_order_create(qty)
-    puts "Starting to create Sales Order records...  Please give the API time to respond..."
-    r         = RestActions.new(access_token: @access_token)
+    puts "Starting to create Sales Order records...  Please give the API time to respond...\n"
+    r         = FakeRestActions.new(access_token: @access_token)
     customers = r.get_possible_customers
     skus      = r.get_possible_skus
-    1.times do |t|
+    qty.times do |t|
       body = FakeSalesOrder.new(customers: customers, skus: skus, times: Random.new.rand(2..4)).generate
       # puts JSON.pretty_generate(JSON.parse(body.to_json))
-      RestActions.new(endpoint: "SalesOrders", body: body, access_token: @access_token).post_request
+      FakeRestActions.new(endpoint: "SalesOrders", body: body, access_token: @access_token).post_request
     end
 
+  end
+
+  def execute_invoice_create(qty)
+    puts "Getting recent Sales Order...\n"
+    sales_order = JSON.parse(FakeRestActions.new(endpoint: "SalesOrders", record_id: "633", access_token: @access_token).get_request)
+    puts "Getting associated Customer record...\n"
+    customer    = JSON.parse(FakeRestActions.new(endpoint: "Customers", record_id: sales_order["customer"]["id"].to_s, access_token: @access_token).get_request)
+    binding.pry
+    body = FakeSalesInvoice.new(customer: customer, sales_order: sales_order).generate
+    puts JSON.pretty_generate(JSON.parse(body.to_json))
   end
 
   def you_screwed_up
@@ -87,7 +105,7 @@ class FakeAnywhereData
     sleep(5)
     puts "Intentional delay - you waste my time I waste yours.\n\n\n"
     sleep(2)
-    puts "You need to start over"
+    puts "You need to start over\n"
     exit
   end
 

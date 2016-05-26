@@ -2,7 +2,7 @@ require 'rest-client'
 require 'json'
 require_relative 'fake_sales_order'
 
-class RestActions
+class FakeRestActions
   attr_accessor :body, :endpoint, :record_id, :access_token
 
   def initialize(args)
@@ -14,10 +14,7 @@ class RestActions
 
   def get_request
     target   = @record_id.empty? ? @endpoint : "#{@endpoint}/#{@record_id}"
-    response = RestClient.get "https://api-us.sapanywhere.com:443/v1/#{target}?access_token=#{@access_token}", { 'Authorization' => "Bearer #{@access_token}", 'Accept' => 'application/json' }
-    puts JSON.pretty_generate(JSON.parse(response))
-    puts "\n\n\n"
-    sleep(1)
+    RestClient.get "https://api-us.sapanywhere.com:443/v1/#{target}?access_token=#{@access_token}&expand=*", { 'Authorization' => "Bearer #{@access_token}", 'Accept' => 'application/json' }
   end
 
   def post_request

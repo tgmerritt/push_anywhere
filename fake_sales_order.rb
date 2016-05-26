@@ -19,9 +19,9 @@ class FakeSalesOrder
 
       this_product = @skus.sample
       quantity     = random.rand(1..3)
-      net          = random.rand(1.01..19.99).round(2)
-      gross        = random.rand(1.01..19.99).round(2)
-      standard     = random.rand(20.01..100.99).round(2)
+      net          = random.rand(10.01..190.99).round(2)
+      gross        = random.rand(10.01..190.99).round(2)
+      standard     = random.rand(200.01..1000.99).round(2)
       discount     = random.rand(0.1..5.99).round(2)
 
       netAmount   = quantity * net

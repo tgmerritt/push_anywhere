@@ -2,8 +2,9 @@
 
 require 'rest-client'
 require 'json'
+require 'pry'
 require_relative 'fake_anywhere_data'
-require_relative 'rest_actions'
+require_relative 'fake_rest_actions'
 
 class FakeAnywhereApi
 
@@ -107,18 +108,20 @@ class FakeAnywhereApi
   end
 
   def make_get_request(endpoint, record_id)
-    action = RestActions.new(endpoint: endpoint, record_id: record_id, access_token: @access_token)
-    action.get_request
+    response = FakeRestActions.new(endpoint: endpoint, record_id: record_id, access_token: @access_token).get_request
+    puts JSON.pretty_generate(JSON.parse(response))
+    puts "\n\n\n"
+    sleep(1)
     run_step_1
   end
 
   def make_post_request(endpoint, body)
-    RestActions.new(endpoint: endpoint, body: body, access_token: @access_token)
+    FakeRestActions.new(endpoint: endpoint, body: body, access_token: @access_token)
     run_step_1
   end
 
   def make_patch_request(endpoint, record_id, body)
-    RestActions.new(endpoint: endpoint, record_id: record_id, body: body, access_token: @access_token)
+    FakeRestActions.new(endpoint: endpoint, record_id: record_id, body: body, access_token: @access_token)
     run_step_1
   end
 
