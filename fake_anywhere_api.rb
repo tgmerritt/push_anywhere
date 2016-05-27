@@ -10,6 +10,7 @@ class FakeAnywhereApi
 
   def initialize
     puts "Welcome to the SAP Anywhere fake data publishing utility!"
+    puts "If you have not already done so, set the API Environment Variables (read the README in the project) and start this utility again"
     run_step_1
   end
 
@@ -122,17 +123,6 @@ class FakeAnywhereApi
   def make_patch_request(endpoint, record_id, body)
     FakeRestActions.new(endpoint: endpoint, record_id: record_id, body: body, access_token: @access_token)
     run_step_1
-  end
-
-  def set_api_values
-    puts "Please paste in the following tokens as they are requested."
-    puts "API Key:"
-    @api_key = gets.chomp
-    puts "API Secret:"
-    @api_secret = gets.chomp
-    puts "Refresh Token:"
-    @refresh_token = gets.chomp
-    authenticate_with_api
   end
 
   def authenticate_with_api
