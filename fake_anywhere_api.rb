@@ -29,8 +29,7 @@ class FakeAnywhereApi
 
   def analyze_first_choice(input)
     if input == "1"
-      set_static_api_values
-      # set_api_values
+      set_api_values
       is_response_valid?(authenticate_with_api)
       run_step_1
     elsif input == "2"
@@ -149,10 +148,10 @@ class FakeAnywhereApi
     puts "\n\nSuccess! Access Token is #{@access_token}\n\n"
   end
 
-  def set_static_api_values
-    @api_key       = '4660200588335353-7BppDmr4rnd3ZOXRbHMo6zAEfsRR9kZg'
-    @api_secret    = 'vXNR_NXBVtXHUJsLjuMfnTMiWrwp'
-    @refresh_token = '61c49b95-64df-4662-9cb0-cf078d02f69c'
+  def set_api_values
+    @api_key       = ENV['SAP_ANW_API_KEY']
+    @api_secret    = ENV['SAP_ANW_API_SECRET']
+    @refresh_token = ENV['SAP_ANW_REFRESH_TOKEN']
   end
 
   def you_screwed_up

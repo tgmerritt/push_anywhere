@@ -16,7 +16,6 @@ class FakeCustomerRecord
         "firstName":              first_name,
         "membershipNo":           Faker::Number.number(10),
         "vatRegistrationNumber":  Faker::Number.number(9),
-        # "title":                  Faker::Name.prefix,
         "position":               "",
         "stage":                  "SUSPECT",
         "mobile":                 Faker::PhoneNumber.cell_phone,

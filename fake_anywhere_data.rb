@@ -50,18 +50,17 @@ class FakeAnywhereData
   def randomize_records
     puts "Due to the API throughput limitations, this may take some time...\n"
 
-    10.times do |t|
-      execute_customer_record_create(10)
-    end
+    execute_customer_record_create(10)
 
-    10.times do |t|
-      execute_sales_order_create(10)
-    end
+    execute_sales_order_create(25)
 
-    10.times do |t|
-      execute_invoice_create(10)
-    end
-    puts "Finished creating bulk records!"
+    execute_invoice_create(25)
+
+    # 25.times do |t|
+    #   execute_payment_create(25)
+    # end
+
+    puts "\nFinished creating bulk records!"
     exit
   end
 
@@ -130,7 +129,7 @@ class FakeAnywhereData
     invoices.each do |invoice|
       puts "Getting associated Customer record for SalesInvoice #{invoice['id']}\n"
       customer = JSON.parse(FakeRestActions.new(endpoint: "Customers", record_id: invoice["customer"]["id"].to_s, access_token: @access_token).get_request)
-      body = FakeSalesPayment.new(customer: customer, invoice: invoice).generate
+      body     = FakeSalesPayment.new(customer: customer, invoice: invoice).generate
       # puts JSON.pretty_generate(JSON.parse(body.to_json))
       FakeRestActions.new(endpoint: "Payments", body: body, access_token: @access_token).post_request
     end
