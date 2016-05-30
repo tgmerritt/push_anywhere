@@ -1,9 +1,10 @@
-class FakeSalesPayment
+require_relative 'fake_record'
+
+class FakeSalesPayment < FakeRecord
   attr_accessor :customer, :invoice
 
-  def initialize(args)
-    @customer = args[:customer]
-    @invoice  = args[:invoice]
+  def initialize args = {}
+    super args
   end
 
   def generate

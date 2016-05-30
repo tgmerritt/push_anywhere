@@ -1,6 +1,6 @@
 require 'faker'
 
-class FakeCustomerRecord
+class FakeCustomer
 
   def initialize
   end

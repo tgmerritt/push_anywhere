@@ -1,15 +1,13 @@
 require 'rest-client'
 require 'json'
 require_relative 'fake_sales_order'
+require_relative 'fake_record'
 
-class FakeRestActions
+class FakeRestActions < FakeRecord
   attr_accessor :body, :endpoint, :record_id, :access_token
 
   def initialize(args)
-    @body         = args[:body] || ""
-    @endpoint     = args[:endpoint] || ""
-    @record_id    = args[:record_id] || ""
-    @access_token = args[:access_token] || ""
+    super args
   end
 
   def get_request

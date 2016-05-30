@@ -1,4 +1,4 @@
-require_relative 'fake_customer_record'
+require_relative 'fake_customer'
 require_relative 'fake_sales_order'
 require_relative 'fake_rest_actions'
 require_relative 'fake_sales_invoice'
@@ -95,7 +95,8 @@ class FakeAnywhereData
   def execute_customer_record_create(qty)
     puts "Starting to create Customer records...  Please give the API time to respond...\n"
     qty.times do |t|
-      body = FakeCustomerRecord.new.generate
+      body = FakeCustomer.new.generate
+      # puts JSON.pretty_generate(JSON.parse(body.to_json))
       FakeRestActions.new(endpoint: "Customers", body: body, access_token: @access_token).post_request
     end
   end

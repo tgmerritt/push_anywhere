@@ -1,13 +1,12 @@
 require 'faker'
 require 'as-duration'
+require_relative'fake_record'
 
-class FakeSalesOrder
-  attr_accessor :customer, :skus, :times
+class FakeSalesOrder < FakeRecord
+  attr_accessor :customers, :skus, :times
 
-  def initialize(args)
-    @customer = args[:customers]
-    @skus     = args[:skus]
-    @times    = args[:times]
+  def initialize args = {}
+    super args
   end
 
   def create_product_lines
@@ -15,9 +14,9 @@ class FakeSalesOrder
 
     random = Random.new
 
-    @times.times do |t|
+    times.times do |t|
 
-      this_product = @skus.sample
+      this_product = skus.sample
       quantity     = random.rand(1..3)
       net          = random.rand(10.01..190.99).round(2)
       gross        = random.rand(10.01..190.99).round(2)
@@ -52,7 +51,7 @@ class FakeSalesOrder
   end
 
   def generate
-    c                    = customer.sample
+    c                    = customers.sample
     random               = Random.new
     base                 =
         {

@@ -1,21 +1,26 @@
 require 'faker'
 require 'as-duration'
+require_relative 'fake_record'
 
-class FakeSalesInvoice
+class FakeSalesInvoice < FakeRecord
   attr_accessor :customer, :sales_order
 
-  def initialize(args)
-    @customer      = args[:customer]
-    @sales_order   = args[:sales_order]
+  # def initialize(args)
+  #   @customer      = args[:customer]
+  #   @sales_order   = args[:sales_order]
+  # end
+
+  def initialize args = {}
+    super args
   end
 
   def generate
     base                  = {
-        "exchangeRate":    1,
-        "postingTime":     Faker::Time.between(5.days.ago, Date.today, :day).iso8601,
-        "dueTime":         Faker::Time.forward(30, :day).iso8601,
-        "remark":          Faker::Hipster.sentence,
-        "billingAddress":  {
+        "exchangeRate":   1,
+        "postingTime":    Faker::Time.between(5.days.ago, Date.today, :day).iso8601,
+        "dueTime":        Faker::Time.forward(30, :day).iso8601,
+        "remark":         Faker::Hipster.sentence,
+        "billingAddress": {
             "countryCode":   "US",
             "state":         @sales_order['billingAddress']['state'],
             "cityName":      @sales_order['billingAddress']['cityName'],
@@ -38,16 +43,16 @@ class FakeSalesInvoice
     @sales_order['productLines'].each do |key|
       invoiceLines <<
           {
-              "baseDocument":    {
+              "baseDocument":   {
                   "baseId":         @sales_order['id'],
                   "baseNumber":     '',
                   "baseType":       "SalesOrder",
                   "baseLineId":     key['id'],
                   "baseLineNumber": ''
               },
-              "remark":          Faker::Hipster.sentence,
-              "netUnitPrice":    key['sku']['netUnitPrice'],
-              "grossUnitPrice":  key['sku']['grossUnitPrice']
+              "remark":         Faker::Hipster.sentence,
+              "netUnitPrice":   key['sku']['netUnitPrice'],
+              "grossUnitPrice": key['sku']['grossUnitPrice']
           }
     end
     invoiceLines
