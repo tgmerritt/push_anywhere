@@ -120,6 +120,7 @@ class FakeAnywhereData
       puts "Getting associated Customer record for SalesOrder #{sales_order["id"]}\n"
       customer = JSON.parse(FakeRestActions.new(endpoint: "Customers", record_id: sales_order["customer"]["id"].to_s, access_token: @access_token).get_request)
       body     = FakeSalesInvoice.new(customer: customer, sales_order: sales_order).generate
+      # puts JSON.pretty_generate(JSON.parse(body.to_json))
       FakeRestActions.new(endpoint: "SalesInvoices", body: body, access_token: @access_token).post_request
     end
   end
