@@ -1,0 +1,5 @@
+us:
+  faker:
+    address:
+      default_country_code: ["US"]
+      default_country: ["United States"]
